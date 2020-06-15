@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign up</title>
+</head>
+<body>
+
+<!--<form action="{% url 'signup' %}" method="POST">-->
+<!--    {% csrf_token %}-->
+<form method="post">
+    {% csrf_token %}
+    <table>{{ form }}</table>
+
+<!--    <input type="text" name="username" maxlength="80" size="80" placeholder="Username" value="{{ username }}"/>-->
+<!--    <br />-->
+<!--    <input type="password" name="password" maxlength="80" minlength="3" size="80" placeholder="Password" />-->
+<!--    <br />-->
+<!--    <input type="password" name="password_again" maxlength="80" minlength="3" size="80" placeholder="Repeat password" />-->
+<!--    <br />-->
+<!--    <input type="email" name="email" maxlength="80" size="80" placeholder="Email" value="{{ email }}"/>-->
+<!--    <br />-->
+<!--    <input type="text" name="firstname" maxlength="80" size="80" placeholder="First name" value="{{ firstname }}"/>-->
+<!--    <br />-->
+<!--    <input type="text" name="secondname" maxlength="80" size="80" placeholder="Second name" value="{{ secondname }}"/>-->
+<!--    <br />-->
+<!--    <input type="text" name="cellphone" maxlength="80" size="80" placeholder="Phone number" value="{{ cellphone }}"/>-->
+<!--    <br />-->
+<!--    <input type="text" name="country" maxlength="80" size="80" placeholder="Country" value="{{ country }}"/>-->
+<!--    <br />-->
+
+    <input type="submit" value="Sign up" />
+</form>
+
+</body>
+</html>

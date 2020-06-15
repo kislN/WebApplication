@@ -1,0 +1,29 @@
+{% extends "auction/base.html" %}
+{% load static %}
+
+{% block title %}
+    {{ auction.picture.title }}
+{% endblock %}
+
+{% block content %}
+    <div class="product-detail">
+        <img src="{% if auction.picture.image %}/{{ auction.picture.image }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+        <h1>{{ auction.picture.title }}</h1>
+        <p class="price">${{ auction.current_price }}</p>
+        {% if request.user.is_authenticated %}
+            {% if request.user.id == auction.buyer.id %}
+                You are last buyer!
+                <br />
+            {% endif%}
+        {% endif %}
+
+        Minimum bid is {{ auction.current_price|add:auction.bid_rate }}$
+        <form  method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Raise bid">
+        </form>
+        <h4>Description:</h4>
+        {{ auction.picture.description|linebreaks }}
+    </div>
+{% endblock %}

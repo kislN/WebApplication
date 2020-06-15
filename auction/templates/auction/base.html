@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>{% block title %}Auction.com{% endblock %}</title>
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <div id="header">
+        <a href="/" class="logo">Auction</a>
+        {% if request.user.is_authenticated %}
+            <p>{{ request.user.username }} <a href="{% url 'signout' %}?next={{ request.path }}">Sign out</a></p>
+        {% else %}
+            <p>
+                <a href="{% url 'signin' %}?next={{ request.path }}">Sign in</a> or
+                <a href="{% url 'signup' %}">Sign up</a>
+            </p>
+        {% endif %}
+
+    </div>
+    <div id="subheader">
+        Something
+    </div>
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
