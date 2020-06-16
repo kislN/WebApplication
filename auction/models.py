@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.conf import settings
+from django.urls import reverse
 
-# Create your models here.
+
 class Profile(models.Model):
     user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
     # balance = models.DecimalField(max_digits=6, decimal_places=2)
@@ -12,11 +13,15 @@ class Profile(models.Model):
     photo = models.ImageField(upload_to='media/users/%Y/%m/%d', blank=True)
 
     def __str__(self):
-        user = User.objects.get(id=self.user)
+        user = User.objects.get(id=self.user_id)
         return "id=" + str(self.pk) + " username=" + user.username + " email=" + user.email
+
+    def get_absolute_url(self):
+        return reverse('user_by_id', kwargs={'user_id': self.user_id})
 
 
 class Picture(models.Model):
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
     CATEGORIES = (
                    ('LAND', 'Landscape'),
                    ('PORT', 'Portrait'),
@@ -29,7 +34,8 @@ class Picture(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True, blank=True)
 
     def __str__(self):
-        return "ID:" + str(self.pk) + " " + self.title
+        return self.title
+        # return "ID:" + str(self.pk) + " " + self.title
 
 class Auction(models.Model):
     picture = models.ForeignKey(Picture, on_delete=models.CASCADE)
@@ -52,31 +58,8 @@ class Auction(models.Model):
     def __str__(self):
         return "ID:" + str(self.pk) + " PRODUCT_ID:" + str(self.picture)
 
+    def get_absolute_url(self):
+        return reverse('auction_by_id', kwargs={'auction_id': self.id})
 
-# class Watchlist(models.Model):
-#     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-#     auction_id = models.ForeignKey(Auction, on_delete=models.CASCADE)
-#
-#     def __str__(self):
-#         return "USER_ID:" + str(self.user_id) + " AUCTION_ID:" + str(self.auction_id)
-#
-#
-# class Bid(models.Model):
-#     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-#     auction_id = models.ForeignKey(Auction, on_delete=models.CASCADE)
-#     bid_time = models.DateTimeField()
-#
-#     def __str__(self):
-#         return "USER_ID:" + str(self.user_id) + " AUCTION_ID:" + \
-#                str(self.auction_id) + " " + str(self.bid_time)
-#
-#
-# class Chat(models.Model):
-#     auction_id = models.ForeignKey(Auction, on_delete=models.CASCADE)
-#     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-#     message = models.TextField()
-#     time_sent = models.DateTimeField()
-#
-#     def __str__(self):
-#         return "AUCTION_ID:" + str(self.auction_id) + " USER_ID:" + str(self.user_id)
+
 
