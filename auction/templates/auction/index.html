@@ -1,32 +1,25 @@
 
 {% extends 'auction/base.html' %}
 {% load static %}
-{% block title %}
-    Auction
-{% endblock %}
+{% block title %} Auction {% endblock %}
+{% block describe %}<h3>Active auctions!<h3/>{% endblock %}
 {% block content %}
 
     <div id="main" class="product-list">
-        <h1>Auctions</h1>
         {% for auction in auctions %}
             <div class="item">
                 <a href="{% url 'auction_by_id' auction.id %}">
                     <img src="{% if auction.picture.image %}/{{ auction.picture.image }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
                 </a>
                 <a href="{% url 'auction_by_id' auction.id %}">{{ auction.picture.title }}</a><br>
-                Current price: ${{ auction.min_price }}
+                Last price: ${{ auction.current_price }}
                 <br />
                 <p><small>
                     Auction's start: {{ auction.time_starting}}
                     <br />
                     Auction's end: {{ auction.time_ending}}
                 </small></p>
-                <div>
-                <!-- WATCH BUTTON -->
-                <button type="button" >
-                    Watch
-                </button>
-            </div>
+
 
             </div>
 

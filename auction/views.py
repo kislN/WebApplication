@@ -44,8 +44,6 @@ def sign_up(request):
             password_again = form.cleaned_data['password_again']
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
-            # cellphone = form.cleaned_data['cellphone']
-            # country = form.cleaned_data['country']
             user = User.objects.filter(username=username).first()
             if user is not None:
                 form.add_error('username', 'User already exists!')
@@ -54,20 +52,18 @@ def sign_up(request):
             else:
                 user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name,
                                                 last_name=last_name)
-                # UserDetails.objects.create(user_id=user.id, cellphone=cellphone, country=country)
+                Profile.objects.create(user=user)
                 login(request, user)
                 return render(request, 'auction/signup.html', {'form': form})
     else:
         form = SignupForm()
     return render(request, 'auction/signup.html', {'form': form})
 
-# # def update_account(request):
-#
 
-def sign_in(request):
+def log_in(request):
     if request.method == 'POST':
         logout(request)
-        form = SigninForm(request.POST)
+        form = LoginForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
@@ -88,10 +84,10 @@ def sign_in(request):
             else:
                 form.add_error(None, 'Invalid credentials!')
     else:
-        form = SigninForm()
+        form = LoginForm()
     return render(request, 'auction/signin.html', {'form': form})
 
-def sign_out(request):
+def log_out(request):
     logout(request)
     return redirect(reverse('start_page'))
 
@@ -135,11 +131,35 @@ def watch_auction(request, auction_id):
                 else:
                     form.add_error(None, f'Minimum rate should be {current_price + bid_rate}!')
             else:
-                form.add_error(None, f'Please sign in or sign up!')
+                form.add_error(None, f'Please log in or sign up!')
     else:
         form = WatchAuctionForm()
     return render(request, 'auction/watch_auction.html', {'form': form, 'auction': auction, })
 
 
 def profile(request, user_id):
-    user = 
+    user = get_object_or_404(User, pk=user_id)
+    profile = Profile.objects.get(user=user)
+    return render(request, 'auction/profile.html', {'user': user, 'profile': profile})
+
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(instance=request.user, data=request.POST)
+        profile_form = EditProfileForm(instance=request.user.profile, data=request.POST) #, files=request.FILES)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            return redirect(reverse('start_page'))
+        return render(request,
+                      'auction/edit_profile.html',
+                      {'user_form': user_form,
+                       'profile_form': profile_form})
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = EditProfileForm(instance=request.user.profile)
+        return render(request,
+                      'auction/edit_profile.html',
+                      {'user_form': user_form,
+                       'profile_form': profile_form})

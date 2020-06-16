@@ -1,15 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sign in</title>
-</head>
-<body>
-<form method="post">
-    {% csrf_token %}
-    <table>{{ form }}</table>
-    <input type="submit" value="Login">
-    <a href="{% url 'signup' %}">Sign Up</a>
-</form>
-</body>
-</html>
+{% extends "auction/base.html" %}
+
+{% block title %}Log in{% endblock %}
+{% block describe %}<h3>Please enter your credentials!<h3/>{% endblock %}
+
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <br />
+        <p><input type="submit" value="Log in"><p/>
+    </form>
+
+{% endblock %}
+
+

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import json
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -107,6 +108,21 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+# AUTHENTICATION_BACKENDS = (
+#     # 'social.backends.facebook.Facebook2OAuth2',
+#     'social.backends.google.GoogleOAuth2',
+#     # 'social.backends.twitter.TwitterOAuth',
+#
+#     'django.contrib.auth.backends.ModelBackend',
+#     # 'account.authentication.EmailAuthBackend',
+# )
+
+# with open('api.json') as f:
+#     data = json.load(f)
+#
+# SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = data['google']['key']
+# SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = data['google']['secret']
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/

@@ -1,15 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 # Create your models here.
-class UserDetails(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+class Profile(models.Model):
+    user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
     # balance = models.DecimalField(max_digits=6, decimal_places=2)
     cellphone = models.CharField(max_length=14)
-    # address = models.CharField(max_length=255)
-    # town = models.CharField(max_length=45)
-    # post_code = models.CharField(max_length=45)
     country = models.CharField(max_length=45)
+    date_of_birth = models.DateField(blank=True, null=True)
+    photo = models.ImageField(upload_to='media/users/%Y/%m/%d', blank=True)
 
     def __str__(self):
         user = User.objects.get(id=self.user)

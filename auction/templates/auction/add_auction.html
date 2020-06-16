@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Add auction</title>
-</head>
-<body>
+{% extends "auction/base.html" %}
+
+{% block title %}Add auction{% endblock %}
+{% block describe %}<h3>Please fill the following required fields!<h3/>{% endblock %}
+
+{% block content %}
 <form method="post" enctype="multipart/form-data"  >
     {% csrf_token %}
-    <table>{{ form }}</table>
-    <input type="submit" value="Add">
+    {{ form.as_p }}
+    <p><input type="submit" value="Add"><p/>
 </form>
-</body>
-</html>
+{% endblock %}

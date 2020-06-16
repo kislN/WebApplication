@@ -1,0 +1,13 @@
+{% extends "auction/base.html" %}
+
+{% block title %}Edit {{ user.username }}{% endblock %}
+
+{% block content %}
+    <h1>Edit your profile</h1>
+    <form method="post" enctype="multipart/form-data">
+        {{ user_form.as_p }}
+        {{ profile_form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Save changes"></p>
+    </form>
+{% endblock %}
