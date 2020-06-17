@@ -13,7 +13,6 @@ class UserEditForm(forms.ModelForm):
 class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        # fields = ('date_of_birth', 'photo')
         fields = ('cellphone', 'photo')
 
 
@@ -45,13 +44,8 @@ class AddAuctionForm(forms.Form):
     time_ending = forms.DateTimeField(input_formats=['%d/%m/%Y %H:%M']) #, help_text="(Day/Month/Year Hour:Min)")
 
 
-
 class WatchAuctionForm(forms.Form):
     new_price = forms.FloatField()
 
-class TopUpForm(forms.Form):
-    amount = forms.DecimalField(max_digits=6, decimal_places=2)
 
-class CommentForm(forms.Form):
-    comment = forms.CharField(widget=forms.Textarea)
 
