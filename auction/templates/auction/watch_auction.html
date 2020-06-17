@@ -8,7 +8,8 @@
 
 {% block content %}
     <div class="product-detail">
-        <img src="{% if auction.picture.image %}/{{ auction.picture.image }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
+        <img src="{% if auction.picture.image %}/{{ auction.picture.image }}
+        {% else %}{% static 'img/no_image.png' %}{% endif %}" >
         <h1>{{ auction.picture.title }}</h1>
         <h4>{{ auction.picture.description|linebreaks }}</h4>
         <p class="price">Last price is ${{ auction.current_price }}</p>
@@ -22,10 +23,10 @@
         {% if request.user.is_authenticated %}
 
             {% if request.user.id == auction.seller.id %}
-                <h3>You are owner!<h3/>
+                <h3>You are owner!</h3>
             {% else %}
                 {% if request.user.id == auction.buyer.id %}
-                    <h3>You are last buyer!<h3/>
+                    <h3>You are last buyer!</h3>
                     <br />
                 {% endif%}
 

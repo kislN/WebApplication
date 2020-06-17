@@ -112,10 +112,12 @@ def watch_auction(request, auction_id):
 def profile(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     profile = Profile.objects.filter(user_id=user_id).first()
-    auctions = Auction.objects.order_by('time_starting')
+    own_auctions = Auction.objects.filter(seller_id=user_id)
+    winning_auctions = Auction.objects.filter(buyer_id=user_id).exclude(seller_id=user_id)
     if profile is None:
         profile = Profile.objects.create(user_id=user_id, balance=0)
-    return render(request, 'auction/profile.html', {'user': user, 'profile': profile, 'auctions': auctions})
+    return render(request, 'auction/profile.html', {'user': user, 'profile': profile, 'own_auctions': own_auctions,
+                                                    'winning_auctions': winning_auctions})
 
 
 @login_required
@@ -127,9 +129,10 @@ def edit_profile(request):
             user_form.save()
             profile_form.save()
             photo = profile_form.cleaned_data['photo']
-            profile = Profile.objects.get(user_id=request.user.id)
-            profile.photo = photo
-            profile.save()
+            if photo is not None:
+                profile = Profile.objects.get(user_id=request.user.id)
+                profile.photo = photo
+                profile.save()
             return redirect(reverse('user_by_id', kwargs={'user_id': request.user.id}))
         return render(request,
                       'auction/edit_profile.html',

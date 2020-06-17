@@ -13,23 +13,39 @@
 
         {% if profile.cellphone %}
             Phone: {{ profile.cellphone }}
+            <br/>
         {% endif %}
 
         {% if profile.country %}
             Country: {{ profile.country }}
+            <br/>
         {% endif %}
 
         {% if profile.date_of_birth %}
             Date of birth: {{ profile.date_of_birth }}
+            <br/>
         {% endif %}
 
-        <br/>
         {% if request.user.is_authenticated %}
             {% if request.user.id == user.id %}
-                <a href="{% url 'edit_user'%}"> Edit profile <a/>
+                <h3><a href=".">Balance</a>: {{ profile.balance }}</h3>
+                <a href="{% url 'edit_user'%}"> Edit profile </a>
                 <br />
+                    {% if winning_auctions.exists %}
+                        <h3>You are last buyer of the following auctions:</h3>
+
+                        {% for auction in winning_auctions %}
+                            <a href="{% url 'auction_by_id' auction.id %}">{{ auction.picture.title }}</a>
+                        {% endfor %}
+
+                    {% endif %}
             {% endif%}
         {% endif %}
+
+        <h3>My auctions: </h3>
+        {% for auction in own_auctions %}
+            <a href="{% url 'auction_by_id' auction.id %}">{{ auction.picture.title }}</a>
+        {% endfor %}
 
     </div>
 
