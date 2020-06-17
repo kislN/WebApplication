@@ -8,7 +8,6 @@
 {% block content %}
 
     <div class="product-detail">
-
         <img src="{% if profile.image %}/{{ profile.image }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
             <h1>{{ user.first_name }} {{ user.last_name }}</h1>
             <h3>E-mail: {{ user.email }}</h3>

@@ -4,7 +4,6 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import *
 
 
-
 class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
@@ -12,11 +11,10 @@ class UserEditForm(forms.ModelForm):
 
 
 class EditProfileForm(forms.ModelForm):
-
     class Meta:
         model = Profile
         # fields = ('date_of_birth', 'photo')
-        fields = ('cellphone',)
+        fields = ('cellphone', 'photo')
 
 
 class LoginForm(forms.Form):

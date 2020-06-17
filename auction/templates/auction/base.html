@@ -3,13 +3,13 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>{% block title %}Auction.com{% endblock %}</title>
+    <title>{% block title %}Munch.com{% endblock %}</title>
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
 </head>
 <body>
 
     <div id="header">
-        <a href="{% url 'start_page' %}" class="logo">Auction</a>
+        <a href="{% url 'start_page' %}" class="logo">Munch</a>
         {% if request.user.is_authenticated %}
             <p>{{ request.user.username }}, <a href="{% url 'addauction' %}">create your own auction!</a>
                 <br/>
