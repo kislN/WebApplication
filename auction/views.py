@@ -63,7 +63,7 @@ def log_out(request):
     logout(request)
     return redirect(reverse('start_page'))
 
-
+@login_required
 def add_auction(request):
     if request.method == 'POST':
         form = AddAuctionForm(request.POST, request.FILES)
