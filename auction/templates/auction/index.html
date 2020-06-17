@@ -13,7 +13,7 @@
 
                 <a href="{% url 'auction_by_id' auction.id %}">
                     <img src="{% if auction.picture.image %}/{{ auction.picture.image }}{% else %}
-                    {% static 'img/no_image.png' %}{% endif %}">
+                    {% static 'img/no_image.png' %}{% endif %}" alt={{auction.picture.title}} weight="200">
                 </a>
 
                 <a href="{% url 'auction_by_id' auction.id %}">{{ auction.picture.title }}</a>

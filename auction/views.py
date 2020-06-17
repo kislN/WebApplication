@@ -10,8 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 def start_page(request):
     auctions = Auction.objects.order_by('time_starting')
-    pictures = Picture.objects.all()
-    return render(request, 'auction/index.html', {'auctions': auctions, 'pictures': pictures})
+    return render(request, 'auction/index.html', {'auctions': auctions})
 
 
 def sign_up(request):
@@ -113,9 +112,10 @@ def watch_auction(request, auction_id):
 def profile(request, user_id):
     user = get_object_or_404(User, pk=user_id)
     profile = Profile.objects.filter(user_id=user_id).first()
+    auctions = Auction.objects.order_by('time_starting')
     if profile is None:
         profile = Profile.objects.create(user_id=user_id, balance=0)
-    return render(request, 'auction/profile.html', {'user': user, 'profile': profile})
+    return render(request, 'auction/profile.html', {'user': user, 'profile': profile, 'auctions': auctions})
 
 
 @login_required
