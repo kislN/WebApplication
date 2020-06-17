@@ -5,31 +5,12 @@ from .forms import *
 from .models import *
 from django.urls import reverse
 from django.shortcuts import render, get_object_or_404, redirect
-import datetime
 from django.contrib.auth.decorators import login_required
-
 
 
 def start_page(request):
     auctions = Auction.objects.order_by('time_starting')
     pictures = Picture.objects.all()
-
-    # try:
-    #     if request.session['username']:
-    #         user = User.objects.get(username=request.session['username'])
-    #
-    #         w = Watchlist.objects.filter(user_id=user)
-    #         watchlist = Auction.objects.none()
-    #         for item in w:
-    #             a = Auction.objects.filter(id=item.auction_id.id)
-    #             watchlist = list(chain(watchlist, a))
-    #
-    #         userDetails = UserDetails.objects.get(user_id=user.id)
-    #         return render(request, 'index.html',
-    #                       {'auctions': auctions, 'balance': userDetails.balance, 'watchlist': watchlist})
-    # except KeyError:
-    #     return render(request, 'index.html', {'auctions': auctions})
-
     return render(request, 'auction/index.html', {'auctions': auctions, 'pictures': pictures})
 
 
@@ -50,11 +31,11 @@ def sign_up(request):
             elif password != password_again:
                 form.add_error('password_again', 'Passwords mismatch!')
             else:
-                user = User.objects.create_user(username=username, email=email, password=password, first_name=first_name,
-                                                last_name=last_name)
-                Profile.objects.create(user=user)
+                user = User.objects.create_user(username=username, email=email, password=password,
+                                                first_name=first_name, last_name=last_name)
+                Profile.objects.create(user=user, balance=0)
                 login(request, user)
-                return render(request, 'auction/signup.html', {'form': form})
+                return redirect(reverse('edit_user'))
     else:
         form = SignupForm()
     return render(request, 'auction/signup.html', {'form': form})
@@ -70,16 +51,6 @@ def log_in(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                # redirect_url = request.GET.get('next')
-                # if redirect_url:
-                #     if not user.is_staff:
-                #         blog = Blog.objects.filter(author_id=user.id).first()
-                #     else:
-                #         blog = None
-                #     if blog:
-                #         redirect_url = reverse('blog_by_id', kwargs={'blog_id': blog.id})
-                #     else:
-                #         redirect_url = reverse('index')
                 return redirect(reverse('start_page'))
             else:
                 form.add_error(None, 'Invalid credentials!')
@@ -87,9 +58,11 @@ def log_in(request):
         form = LoginForm()
     return render(request, 'auction/signin.html', {'form': form})
 
+
 def log_out(request):
     logout(request)
     return redirect(reverse('start_page'))
+
 
 def add_auction(request):
     if request.method == 'POST':
@@ -102,17 +75,17 @@ def add_auction(request):
             min_price = form.cleaned_data['min_price']
             bid_rate = form.cleaned_data['bid_rate']
             time_ending = form.cleaned_data['time_ending']
-            picture = Picture.objects.create(image=img, title=title, description=description, category=category)
             seller = request.user
-            Auction.objects.create(picture_id=picture.id, seller=seller, time_ending=time_ending,
+            picture = Picture.objects.create(image=img, title=title, description=description, category=category,
+                                             user_id=seller.id)
+            Auction.objects.create(picture_id=picture.id, seller_id=seller.id, buyer_id=seller.id, time_ending=time_ending,
                                    current_price=min_price, bid_rate=bid_rate, lifecycle='Active')
-
-            return render(request, 'auction/add_auction.html', {'form': form})
+            return redirect(reverse('start_page'))
     else:
         form = AddAuctionForm()
     return render(request, 'auction/add_auction.html', {'form': form})
 
-# @login_required(login_url='/auction/signin')
+
 def watch_auction(request, auction_id):
     auction = get_object_or_404(Auction, pk=auction_id)
     if request.method == 'POST':
@@ -151,7 +124,7 @@ def edit_profile(request):
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
-            return redirect(reverse('start_page'))
+            return redirect(reverse('user_by_id', kwargs={'user_id': request.user.id}))
         return render(request,
                       'auction/edit_profile.html',
                       {'user_form': user_form,

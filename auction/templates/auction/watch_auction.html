@@ -20,16 +20,25 @@
         </small></p>
 
         {% if request.user.is_authenticated %}
-            {% if request.user.id == auction.buyer.id %}
-                <h3>You are last buyer!<h3/>
-                <br />
-            {% endif%}
+
+            {% if request.user.id == auction.seller.id %}
+                <h3>You are owner!<h3/>
+            {% else %}
+                {% if request.user.id == auction.buyer.id %}
+                    <h3>You are last buyer!<h3/>
+                    <br />
+                {% endif%}
+
+                <form  method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <p><input type="submit" value="Raise bid"></form></p>
+                </form>
+
+            {% endif %}
+        {% else %}
+                <h3>Please log in or sign in to participate in the auction!</h3>
         {% endif %}
-        <form  method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <p><input type="submit" value="Raise bid"></form></p>
-        </form>
 
     </div>
 {% endblock %}

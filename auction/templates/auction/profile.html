@@ -1,26 +1,30 @@
-
 {% extends 'auction/base.html' %}
+
 {% load static %}
+
 {% block title %} {{ user.username }} {% endblock %}
 {% block describe %}<h3>Personal information:<h3/>{% endblock %}
 
 {% block content %}
 
     <div class="product-detail">
+
         <img src="{% if profile.image %}/{{ profile.image }}{% else %}{% static 'img/no_image.png' %}{% endif %}">
             <h1>{{ user.first_name }} {{ user.last_name }}</h1>
             <h3>E-mail: {{ user.email }}</h3>
 
-<!--        <h4>Details:</h4>-->
         {% if profile.cellphone %}
             Phone: {{ profile.cellphone }}
         {% endif %}
+
         {% if profile.country %}
             Country: {{ profile.country }}
         {% endif %}
+
         {% if profile.date_of_birth %}
             Date of birth: {{ profile.date_of_birth }}
         {% endif %}
+
         <br/>
         {% if request.user.is_authenticated %}
             {% if request.user.id == user.id %}
@@ -28,6 +32,7 @@
                 <br />
             {% endif%}
         {% endif %}
+
     </div>
 
 {% endblock %}

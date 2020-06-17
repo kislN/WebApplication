@@ -38,8 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'reader.apps.ReaderConfig',
-    'auction.apps.AuctionConfig'
+    'auction.apps.AuctionConfig',
 ]
 
 MIDDLEWARE = [
@@ -108,7 +107,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # AUTHENTICATION_BACKENDS = (
 #     # 'social.backends.facebook.Facebook2OAuth2',
 #     'social.backends.google.GoogleOAuth2',
@@ -141,13 +139,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_PATH = os.path.join('/Users/stasyan/PycharmProjects/WebApplication', 'static')
+STATIC_PATH = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     STATIC_PATH,
 )
 
-MEDIA_PATH = os.path.join('/Users/stasyan/PycharmProjects/WebApplication', 'media')
+MEDIA_PATH = os.path.join(BASE_DIR, "media")
 MEDIA_URL = '/media/'
 MEDIAFILES_DIRS = (
     MEDIA_PATH,

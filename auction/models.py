@@ -6,7 +6,7 @@ from django.urls import reverse
 
 class Profile(models.Model):
     user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
-    # balance = models.DecimalField(max_digits=6, decimal_places=2)
+    balance = models.DecimalField(max_digits=6, decimal_places=2)
     cellphone = models.CharField(max_length=14)
     country = models.CharField(max_length=45)
     date_of_birth = models.DateField(blank=True, null=True)
@@ -21,7 +21,7 @@ class Profile(models.Model):
 
 
 class Picture(models.Model):
-    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     CATEGORIES = (
                    ('LAND', 'Landscape'),
                    ('PORT', 'Portrait'),
@@ -36,6 +36,7 @@ class Picture(models.Model):
     def __str__(self):
         return self.title
         # return "ID:" + str(self.pk) + " " + self.title
+
 
 class Auction(models.Model):
     picture = models.ForeignKey(Picture, on_delete=models.CASCADE)
