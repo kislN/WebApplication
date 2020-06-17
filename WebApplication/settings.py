@@ -38,7 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'auction.apps.AuctionConfig',
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -107,20 +113,34 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# AUTHENTICATION_BACKENDS = (
-#     # 'social.backends.facebook.Facebook2OAuth2',
-#     'social.backends.google.GoogleOAuth2',
-#     # 'social.backends.twitter.TwitterOAuth',
-#
-#     'django.contrib.auth.backends.ModelBackend',
-#     # 'account.authentication.EmailAuthBackend',
-# )
+AUTHENTICATION_BACKENDS = (
+ 'django.contrib.auth.backends.ModelBackend',
+ 'allauth.account.auth_backends.AuthenticationBackend',
+ )
+
 
 # with open('api.json') as f:
 #     data = json.load(f)
 #
 # SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = data['google']['key']
 # SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = data['google']['secret']
+
+
+
+SITE_ID = 2
+LOGIN_REDIRECT_URL = '/'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/

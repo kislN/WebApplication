@@ -1,7 +1,10 @@
 {% extends "auction/base.html" %}
 
+{% load socialaccount %}
+
 {% block title %}Log in{% endblock %}
-{% block describe %}<h3>Please enter your credentials!<h3/>{% endblock %}
+{% block describe %}<h3>Please enter your credentials or
+    <a href="{% provider_login_url 'google' %}">login with Google</a> !<h3/>{% endblock %}
 
 
 {% block content %}
@@ -10,7 +13,10 @@
         {{ form.as_p }}
         <br />
         <p><input type="submit" value="Log in"><p/>
+
     </form>
+
+
 
 {% endblock %}
 

@@ -7,8 +7,8 @@ from django.urls import reverse
 class Profile(models.Model):
     user = models.OneToOneField(User, primary_key=True, on_delete=models.CASCADE)
     balance = models.DecimalField(max_digits=6, decimal_places=2)
-    cellphone = models.CharField(max_length=14)
-    country = models.CharField(max_length=45)
+    cellphone = models.CharField(max_length=14, blank=True)
+    country = models.CharField(max_length=45, blank=True)
     date_of_birth = models.DateField(blank=True, null=True)
     photo = models.ImageField(upload_to='media/users/%Y/%m/%d', blank=True)
 
@@ -29,7 +29,7 @@ class Picture(models.Model):
     title = models.CharField(max_length=255)
     image = models.ImageField(upload_to='media/pictures/%Y/%m/%d', blank=True,
                               default='media/pictures/None/no-img.jpg')
-    description = models.CharField(max_length=500)
+    description = models.CharField(max_length=500, blank=True)
     category = models.CharField(max_length=100, choices=CATEGORIES)
     date_posted = models.DateTimeField(auto_now_add=True, blank=True)
 

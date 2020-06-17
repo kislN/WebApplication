@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from .models import *
+from django.forms import ModelForm, Textarea
+
 
 
 class UserEditForm(forms.ModelForm):
@@ -11,9 +13,11 @@ class UserEditForm(forms.ModelForm):
 
 
 class EditProfileForm(forms.ModelForm):
+    photo = forms.ImageField(required=False)
     class Meta:
         model = Profile
-        fields = ('cellphone', 'photo')
+        fields = ('cellphone', 'country', 'date_of_birth')
+
 
 
 class LoginForm(forms.Form):
@@ -33,7 +37,7 @@ class SignupForm(forms.Form):
 class AddAuctionForm(forms.Form):
     image = forms.ImageField()
     title = forms.CharField(label='Title', max_length=150)
-    description = forms.CharField(label='Description', max_length=500, widget=forms.Textarea())
+    description = forms.CharField(label='Description', max_length=500, widget=forms.Textarea(), required=False)
     CATEGORIES = (
         ('LAND', 'Landscape'),
         ('PORT', 'Portrait'),
