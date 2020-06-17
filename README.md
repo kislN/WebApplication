@@ -2,7 +2,7 @@
 Auction for young artists.
 
 Structure:
-* start page 'Munk' with list of the active auctions
+* start page 'Munch' with list of the active auctions
 * page to log in
 * page to sign up
 * page of profile (any person can see it)
