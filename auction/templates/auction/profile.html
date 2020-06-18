@@ -43,9 +43,13 @@
         {% endif %}
 
         <h3>My auctions: </h3>
-        {% for auction in own_auctions %}
-            <a href="{% url 'auction_by_id' auction.id %}">{{ auction.picture.title }}</a>
-        {% endfor %}
+        {% if own_auctions.exists %}
+            {% for auction in own_auctions %}
+                <a href="{% url 'auction_by_id' auction.id %}">{{ auction.picture.title }}</a>
+            {% endfor %}
+        {% else %}
+            <a href="{% url 'addauction' %}">Create auction!</a>
+        {% endif %}
 
     </div>
 

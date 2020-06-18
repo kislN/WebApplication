@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 
 def start_page(request):
-    auctions = Auction.objects.order_by('time_starting')
+    auctions = Auction.objects.order_by('-time_ending')
     return render(request, 'auction/index.html', {'auctions': auctions})
 
 
@@ -33,8 +33,10 @@ def sign_up(request):
                 user = User.objects.create_user(username=username, email=email, password=password,
                                                 first_name=first_name, last_name=last_name)
                 Profile.objects.create(user=user, balance=0)
-                login(request, user)
-                return redirect(reverse('edit_user'))
+                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+                # return redirect(reverse('edit_user'))
+                return redirect(reverse('user_by_id', kwargs={'user_id': request.user.id}))
+
     else:
         form = SignupForm()
     return render(request, 'auction/signup.html', {'form': form})
@@ -122,6 +124,9 @@ def profile(request, user_id):
 
 @login_required
 def edit_profile(request):
+    profile = Profile.objects.filter(user_id=request.user.id).first()
+    if profile is None:
+        profile = Profile.objects.create(user_id=request.user.id, balance=0)
     if request.method == 'POST':
         user_form = UserEditForm(instance=request.user, data=request.POST)
         profile_form = EditProfileForm(instance=request.user.profile, data=request.POST, files=request.FILES)

@@ -6,7 +6,6 @@
 {% block describe %}<h3>Please enter your credentials or
     <a href="{% provider_login_url 'google' %}">login with Google</a> !<h3/>{% endblock %}
 
-
 {% block content %}
     <form method="post">
         {% csrf_token %}

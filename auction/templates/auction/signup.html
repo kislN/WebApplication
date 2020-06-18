@@ -3,14 +3,13 @@
 {% load socialaccount %}
 
 {% block title %}Sign up{% endblock %}
-{% block describe %}<h3>Please fill the following required fields or
-    <a href="{% provider_login_url 'google' %}">log in with Google</a> !<h3/>{% endblock %}
+{% block describe %}<h3>Please fill the following required fields!</h3>{% endblock %}
 
 {% block content %}
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <p><input type="submit" value="Sign up" /><p/>
+        <p><input type="submit" value="Sign up" /></p>
     </form>
 
 {% endblock %}

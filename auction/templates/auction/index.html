@@ -8,9 +8,10 @@
 {% block content %}
 
     <div id="main" class="product-list">
-        {% for auction in auctions %}
-            <div class="item">
 
+        {% for auction in auctions %}
+
+            <div class="item">
                 <a href="{% url 'auction_by_id' auction.id %}">
                     <img src="{% if auction.picture.image %}/{{ auction.picture.image }}{% else %}
                     {% static 'img/no_image.png' %}{% endif %}" alt={{auction.picture.title}} weight="200">
@@ -27,8 +28,8 @@
                 </small></p>
 
             </div>
-
         {% endfor %}
+
     </div>
 
 {% endblock %}
