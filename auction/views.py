@@ -36,7 +36,6 @@ def sign_up(request):
                 login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                 # return redirect(reverse('edit_user'))
                 return redirect(reverse('user_by_id', kwargs={'user_id': request.user.id}))
-
     else:
         form = SignupForm()
     return render(request, 'auction/signup.html', {'form': form})
@@ -63,6 +62,7 @@ def log_in(request):
 def log_out(request):
     logout(request)
     return redirect(reverse('start_page'))
+
 
 @login_required
 def add_auction(request):
@@ -101,7 +101,7 @@ def watch_auction(request, auction_id):
                     auction.current_price = new_price
                     auction.buyer = buyer
                     auction.save()
-                    return HttpResponseRedirect(reverse('auction_by_id', kwargs={'auction_id': auction_id}))
+                    return redirect(reverse('auction_by_id', kwargs={'auction_id': auction_id}))
                 else:
                     form.add_error(None, f'Minimum rate should be {current_price + bid_rate}!')
             else:

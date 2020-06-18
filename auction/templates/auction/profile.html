@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block title %} {{ user.username }} {% endblock %}
-{% block describe %}<h3>Personal information:<h3/>{% endblock %}
+{% block describe %}<h3>Personal information:</h3>{% endblock %}
 
 {% block content %}
     <div class="product-detail">
@@ -46,6 +46,7 @@
         {% if own_auctions.exists %}
             {% for auction in own_auctions %}
                 <a href="{% url 'auction_by_id' auction.id %}">{{ auction.picture.title }}</a>
+                <br/>
             {% endfor %}
         {% else %}
             <a href="{% url 'addauction' %}">Create auction!</a>

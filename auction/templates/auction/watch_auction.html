@@ -2,8 +2,8 @@
 {% load static %}
 
 {% block title %}{{ auction.picture.title }}{% endblock %}
-{% block describe %}<h3>Picture "{{ auction.picture.title }}" by
-    <a href="{% url 'user_by_id' auction.seller.id %}" class="logo"> {{ auction.seller.username }}</a><h3/>{% endblock %}
+{% block describe %}<h3>Painting "{{ auction.picture.title }}" by
+    <a href="{% url 'user_by_id' auction.seller.id %}" class="logo"> {{ auction.seller.username }}</a></h3>{% endblock %}
 
 
 {% block content %}
@@ -13,7 +13,7 @@
         <h1>{{ auction.picture.title }}</h1>
         <h4>{{ auction.picture.description|linebreaks }}</h4>
         <p class="price">Last price is ${{ auction.current_price }}</p>
-        <h3>Minimum bid is ${{ auction.current_price|add:auction.bid_rate }}<h3/>
+        <h3>Minimum bid is ${{ auction.current_price|add:auction.bid_rate }}</h3>
         <p><small>
             Auction's start: {{ auction.time_starting}}
             <br />

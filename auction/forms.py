@@ -5,7 +5,6 @@ from .models import *
 from django.forms import ModelForm, Textarea
 
 
-
 class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
@@ -17,7 +16,6 @@ class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('cellphone', 'country', 'date_of_birth')
-
 
 
 class LoginForm(forms.Form):

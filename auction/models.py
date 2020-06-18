@@ -39,7 +39,7 @@ class Picture(models.Model):
 
 
 class Auction(models.Model):
-    picture = models.ForeignKey(Picture, on_delete=models.CASCADE)
+    picture = models.ForeignKey(Picture, on_delete=models.CASCADE)      #TODO: change relation
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
     buyer = models.ForeignKey(User, on_delete=models.SET("(deleted)"), blank=True, null=True,
                               related_name="auction_winner", related_query_name="auction_winner")

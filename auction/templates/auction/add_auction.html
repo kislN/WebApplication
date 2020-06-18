@@ -2,12 +2,12 @@
 
 {% block title %}Add auction{% endblock %}
 
-{% block describe %}<h3>Please fill the following required fields!<h3/>{% endblock %}
+{% block describe %}<h3>Please fill the following required fields!</h3>{% endblock %}
 
 {% block content %}
     <form method="post" enctype="multipart/form-data"  >
         {% csrf_token %}
         {{ form.as_p }}
-        <p><input type="submit" value="Add"><p/>
+        <p><input type="submit" value="Add"></p>
     </form>
 {% endblock %}
